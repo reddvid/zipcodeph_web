@@ -8,6 +8,9 @@ import 'package:zipcodeph_web/main.dart';
 import 'package:zipcodeph_web/models/zipcode.dart';
 import 'package:zipcodeph_web/services/zipcode_controller.dart';
 
+import 'components/search_all_button.dart';
+import 'components/search_list.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -55,6 +58,7 @@ class _HorizontalLayout extends StatefulWidget {
 class _HorizontalLayoutState extends State<_HorizontalLayout> {
   String currentSelectedProvince = "Manila";
   final ZIPCodeController _zipCodeController = ZIPCodeController();
+  bool isSearchOpen = true;
 
   @override
   Widget build(BuildContext context) {
@@ -64,25 +68,52 @@ class _HorizontalLayoutState extends State<_HorizontalLayout> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (String area in areas)
-                  SideMenu(
-                    area: area,
-                    onTap: (value) async {
-                      setState(() {
-                        currentSelectedProvince = value;
-                      });
-                    },
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 20.0, 20.0, 80.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SearchAllButton(
+                      onPressed: (value) {
+                        setState(() {
+                          isSearchOpen = value;
+                        });
+                      },
+                    ),
                   ),
-              ],
+                  for (String area in areas)
+                    SideMenu(
+                      area: area,
+                      onTap: (value) async {
+                        setState(() {
+                          currentSelectedProvince = value;
+                        });
+                      },
+                    ),
+                ],
+              ),
             ),
           ),
         ),
-        ZIPCodeList(
+        Visibility(
+          visible: isSearchOpen,
+          child: SearchAllList(
             zipCodeController: _zipCodeController,
-            currentSelectedProvince: currentSelectedProvince),
+            onPressed: () {
+              setState(() {
+                isSearchOpen = false;
+              });
+            },
+          ),
+        ),
+        Visibility(
+          visible: !isSearchOpen,
+          child: ZIPCodeList(
+              zipCodeController: _zipCodeController,
+              currentSelectedProvince: currentSelectedProvince),
+        ),
       ],
     );
   }

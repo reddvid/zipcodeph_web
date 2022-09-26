@@ -4,24 +4,24 @@ import '../constants.dart';
 import '../models/zipcode.dart';
 import '../services/zipcode_controller.dart';
 
-class ZIPCodeList extends StatefulWidget {
-  const ZIPCodeList({
-    Key? key,
-    required ZIPCodeController zipCodeController,
-    required this.currentSelectedProvince,
-  })  : _zipCodeController = zipCodeController,
+class SearchAllList extends StatefulWidget {
+  const SearchAllList(
+      {Key? key,
+      required ZIPCodeController zipCodeController,
+      required this.onPressed})
+      : _zipCodeController = zipCodeController,
         super(key: key);
 
   final ZIPCodeController _zipCodeController;
-  final String currentSelectedProvince;
+  final Function() onPressed;
 
   @override
-  State<ZIPCodeList> createState() => _ZIPCodeListState();
+  State<SearchAllList> createState() => _SearchAllListState();
 }
 
-class _ZIPCodeListState extends State<ZIPCodeList> {
+class _SearchAllListState extends State<SearchAllList> {
   List<ZIPCodeModel> zipCodes = [];
-
+  String query = "";
   @override
   void initState() {
     super.initState();
@@ -32,8 +32,7 @@ class _ZIPCodeListState extends State<ZIPCodeList> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<dynamic>>(
-      future:
-          widget._zipCodeController.getZipCodes(widget.currentSelectedProvince),
+      future: widget._zipCodeController.find(query),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Expanded(
@@ -58,18 +57,35 @@ class _ZIPCodeListState extends State<ZIPCodeList> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      widget.currentSelectedProvince,
-                      style: kProvinceTitleStyle,
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Search",
+                          style: kProvinceTitleStyle,
+                        ),
+                        TextButton.icon(
+                          onPressed: () {
+                            widget.onPressed();
+                          },
+                          icon: const Icon(Icons.close),
+                          label: const Text("Close"),
+                        )
+                      ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 0.0, 40.0, 0.0),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 2.5,
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        onSubmitted: (value) {
+                          setState(() {
+                            query = value;
+                          });
+                        },
+                        decoration: const InputDecoration(
                             suffixIcon: Icon(Icons.search),
                             hintText: "Search places or ZIP code"),
                       ),
@@ -114,7 +130,7 @@ class _ZIPCodeListState extends State<ZIPCodeList> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 )),
-                            // subtitle: Text(zipCode['area'] as String),
+                            subtitle: Text(zipCode['area'] as String),
                             title: Text(zipCode['town'] as String));
                       },
                     ),
