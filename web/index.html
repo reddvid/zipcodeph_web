@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -14,23 +15,36 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+  <!-- <base href="$FLUTTER_BASE_HREF"> -->
 
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="ZIP Code PH web app made with Flutter">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZIP Code PH</title>
+  <meta property="fb:pages" content="687756097933969" />
+  <meta property="fb:app_id" content="358132315247153" />
+  <meta property="og:title" content="ZIP Code PH" />
+  <meta property="og:description"
+    content="A lightweight reference app to ZIP codes of towns and cities - Luzon, Metro Manila, Visayas, and Mindanao" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://reddavid.me/zipcodeph-app/" />
+  <meta property="og:image" content="https://reddavid.me/images/og/zipcodeph-og.png" />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="zipcodeph_web">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://reddavid.me/images/og/zipcodeph-og.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta name="twitter:title" content="ZIP Code PH" />
+  <meta name="twitter:description"
+    content="A lightweight reference app to ZIP codes of towns and cities - Luzon, Metro Manila, Visayas, and Mindanao" />
 
-  <title>zipcodeph_web</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="manifest" href="manifest.json">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#e80010">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="theme-color" content="#ffffff">
 
   <script>
     // The value below is injected by flutter build, do not touch.
@@ -39,20 +53,22 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
+
 <body>
   <script>
-    window.addEventListener('load', function(ev) {
+    window.addEventListener('load', function (ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         }
-      }).then(function(engineInitializer) {
+      }).then(function (engineInitializer) {
         return engineInitializer.initializeEngine();
-      }).then(function(appRunner) {
+      }).then(function (appRunner) {
         return appRunner.runApp();
       });
     });
   </script>
 </body>
+
 </html>
