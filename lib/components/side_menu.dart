@@ -40,7 +40,10 @@ class _SideMenuState extends State<SideMenu> {
               dense: true,
               title: Padding(
                 padding: const EdgeInsets.only(left: 12.0),
-                child: Text(menu[index]),
+                child: Text(
+                  menu[index],
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
               trailing: const Icon(Icons.chevron_right),
             );

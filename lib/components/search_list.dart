@@ -51,92 +51,95 @@ class _SearchAllListState extends State<SearchAllList> {
         } else {
           return Expanded(
             flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Search",
-                          style: kProvinceTitleStyle,
-                        ),
-                        TextButton.icon(
-                          onPressed: () {
-                            widget.onPressed();
-                          },
-                          icon: const Icon(Icons.close),
-                          label: const Text("Close"),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 0.0, 40.0, 0.0),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      child: TextField(
-                        onSubmitted: (value) {
-                          setState(() {
-                            query = value;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                            suffixIcon: Icon(Icons.search),
-                            hintText: "Search places or ZIP code"),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        "Search",
+                        style: kProvinceTitleStyle,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 80.0),
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) => const Divider(
-                        height: 0.0,
-                      ),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        var zipCode = snapshot.data![index];
-                        return ListTile(
-                            onLongPress: () {
-                              // showModalBottomSheet<void>(
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return bottomSheet(
-                              //           context, snapshot.data![index], _refreshList);
-                              //     });
-                            },
-                            onTap: () {
-                              // showModalBottomSheet<void>(
-                              //     context: context,
-                              //     builder: (BuildContext context) {
-                              //       return bottomSheet(
-                              //           context, snapshot.data![index], _refreshList);
-                              //     });
-                            },
-                            // to compact
-                            leading: Container(
-                                width: 48,
-                                height: double.infinity,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  zipCode['code'].toString(),
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                            subtitle: Text(zipCode['area'] as String),
-                            title: Text(zipCode['town'] as String));
+                    // TextButton.icon(
+                    //   onPressed: () {
+                    //     widget.onPressed();
+                    //   },
+                    //   icon: const Icon(Icons.close),
+                    //   label: const Text("Close"),
+                    // )
+                  ],
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      onSubmitted: (value) {
+                        setState(() {
+                          query = value;
+                        });
                       },
+                      decoration: const InputDecoration(
+                          suffixIcon: Icon(Icons.search),
+                          hintText: "Search places or ZIP code"),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 80.0),
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) => const Divider(
+                      height: 0.0,
+                    ),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var zipCode = snapshot.data![index];
+                      return ListTile(
+                        onLongPress: () {
+                          // showModalBottomSheet<void>(
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return bottomSheet(
+                          //           context, snapshot.data![index], _refreshList);
+                          //     });
+                        },
+                        onTap: () {
+                          // showModalBottomSheet<void>(
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return bottomSheet(
+                          //           context, snapshot.data![index], _refreshList);
+                          //     });
+                        },
+                        // to compact
+                        leading: Container(
+                          width: 48,
+                          height: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            zipCode['code'].toString(),
+                            textAlign: TextAlign.center,
+                            style: kZipCodeNumberStyle,
+                          ),
+                        ),
+                        subtitle: Text(
+                          zipCode['area'] as String,
+                          style: kZipCodeProvinceTextStyle,
+                        ),
+                        title: Text(
+                          zipCode['town'] as String,
+                          style: kZipCodeCityTextStyle,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           );
         }

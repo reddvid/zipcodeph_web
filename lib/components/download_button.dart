@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'dart:js' as js;
 
-class SearchAllButton extends StatelessWidget {
-  const SearchAllButton({Key? key, required this.onPressed}) : super(key: key);
-
-  final Function(bool isSearchOpen) onPressed;
+class DownloadButton extends StatelessWidget {
+  const DownloadButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        onPressed(true);
+        js.context.callMethod(
+            'open', ['https://reddavid.me/zipcodeph-app/download/']);
       },
       icon: const Icon(
-        Icons.search,
+        Icons.download,
         size: 24.0,
       ),
       label: const SizedBox(
         height: 48.0,
         child: Align(
           alignment: Alignment.center,
-          child: Text("Search ZIP codes"),
+          child: Text("Download mobile app"),
         ),
       ),
     );
